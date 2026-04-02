@@ -1,59 +1,46 @@
-import COAs from "./pages/COAs";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
-import Products from "./pages/Products";
-import Contact from "./pages/Contact";
-import Navbar from "./components/Navbar";
-import ProductDetail from "./pages/ProductDetail";
-import logo from "./assets/logo.jpg";
-
-function AppContent() {
-  const location = useLocation();
-  const isProductsPage = location.pathname === "/products";
-
-  return (
-    <div style={{ position: "relative", minHeight: "100vh" }}>
-      <img
-        src={logo}
-        alt="background logo"
-        style={{
-          position: "fixed",
-          top: isProductsPage ? "60%" : "70%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: isProductsPage ? "1100px" : "900px",
-          opacity: isProductsPage ? 0.28 : 0.04,
-          filter: isProductsPage
-            ? "brightness(0.9) blur(1px)"
-            : "brightness(0.7) blur(1px)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <Navbar />
-
-  <Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/products" element={<Products />} />
-  <Route path="/coas" element={<COAs />} />
-  <Route path="/contact" element={<Contact />} />
-  <Route path="/product/:id" element={<ProductDetail />} />
-</Routes>
-
-        <footer className="footer">
-          © 2026 ALPHYX Labs. All product listings are presented for research catalogue purposes only.
-        </footer>
-      </div>
-    </div>
-  );
-}
+import { Routes, Route } from 'react-router-dom'
+import FloatingWhatsAppButton from './components/FloatingWhatsAppButton.jsx'
+import Home from './pages/Home.jsx'
+import Guides from './pages/Guides.jsx'
+import Products from './pages/Products.jsx'
+import ProductDetail from './pages/ProductDetail.jsx'
+import Contact from './pages/Contact.jsx'
+import Verification from './pages/Verification.jsx'
+import GuideRetatrutide from './pages/GuideRetatrutide.jsx'
+import GuideMotsC from './pages/GuideMotsC.jsx'
+import GuideNadPlus from './pages/GuideNadPlus.jsx'
+import GuideBpc157 from './pages/GuideBpc157.jsx'
+import GuideTb500 from './pages/GuideTb500.jsx'
+import GuideTesamorelin from './pages/GuideTesamorelin.jsx'
+import GuidePt141 from './pages/GuidePt141.jsx'
+import GuideGhkCu from './pages/GuideGhkCu.jsx'
+import Calculator from './pages/Calculator.jsx'
+import Admin from "./pages/Admin"
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
-  );
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:slug" element={<ProductDetail />} />
+        <Route path="/guides" element={<Guides />} />
+        <Route path="/verification" element={<Verification />} />
+        <Route path="/contact" element={<Contact />} />
+
+        <Route path="/guides/retatrutide" element={<GuideRetatrutide />} />
+        <Route path="/guides/mots-c" element={<GuideMotsC />} />
+        <Route path="/guides/nad-plus" element={<GuideNadPlus />} />
+        <Route path="/guides/bpc-157" element={<GuideBpc157 />} />
+        <Route path="/guides/tb-500" element={<GuideTb500 />} />
+        <Route path="/guides/tesamorelin" element={<GuideTesamorelin />} />
+        <Route path="/guides/pt-141" element={<GuidePt141 />} />
+        <Route path="/guides/ghk-cu" element={<GuideGhkCu />} />
+	<Route path="/calculator" element={<Calculator />} />
+	<Route path="/admin" element={<Admin />} />
+      </Routes>
+
+      <FloatingWhatsAppButton />
+    </>
+  )
 }

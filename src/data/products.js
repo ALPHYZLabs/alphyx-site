@@ -1,145 +1,158 @@
-import ret20Img from "../assets/products/ret20.jpg";
-import ret30Img from "../assets/products/ret30.jpg";
-import motsImg from "../assets/products/mots.jpg";
-import nadImg from "../assets/products/nad.jpg";
-import ghkImg from "../assets/products/ghk.jpg";
-import bpcImg from "../assets/products/bpc.jpg";
-import tbImg from "../assets/products/tb.jpg";
-import ptImg from "../assets/products/pt.jpg";
-import tesaImg from "../assets/products/tesa.jpg";
-import bacImg from "../assets/products/bac.jpg";
+const products = [
+  {
+    slug: 'retatrutide-20mg',
+    name: 'Retatrutide 20mg',
+    price: '$145',
+    desc: 'Retatrutide is a triple hormone receptor agonist targeting GLP-1, GIP, and glucagon receptors, designed to support fat loss, metabolic rate, and blood sugar control.',
+    image: '/products/reta20.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'retatrutide-30mg',
+    name: 'Retatrutide 30mg',
+    price: '$175',
+    desc: 'Retatrutide is a triple hormone receptor agonist targeting GLP-1, GIP, and glucagon receptors, designed to support fat loss, metabolic rate, and blood sugar control.',
+    image: '/products/reta30.jpg',
+    badge: 'BEST SELLER',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'mots-c',
+    name: 'MOTS-C',
+    price: '$80',
+    desc: 'MOTS-C is a mitochondria-derived peptide that supports energy metabolism, improves insulin sensitivity, and promotes fat utilisation.',
+    image: '/products/mots.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 4,
+  },
+  {
+    slug: 'nad-500mg',
+    name: 'NAD+ 500mg',
+    price: '$100',
+    desc: 'NAD+ is a coenzyme essential for cellular energy production and DNA repair, playing a key role in metabolism, ageing, and overall cellular function.',
+    image: '/products/nad.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'ghk-cu-50mg',
+    name: 'GHK-Cu 50mg',
+    price: '$65',
+    desc: 'GHK-Cu is a copper-binding peptide known for supporting skin repair, collagen production, and tissue regeneration.',
+    image: '/products/ghk.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'bpc-157-10mg',
+    name: 'BPC-157 10mg',
+    price: '$80',
+    desc: 'BPC-157 is a synthetic peptide known for supporting tissue healing, reducing inflammation, and promoting recovery of muscles, tendons, and gut health.',
+    image: '/products/bpc157.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'tb-500-10mg',
+    name: 'TB-500 10mg',
+    price: '$100',
+    desc: 'TB-500 is a synthetic peptide that supports cell migration and tissue repair, helping recovery from muscle, tendon, and ligament injuries.',
+    image: '/products/tb500.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'pt-141-10mg',
+    name: 'PT-141 10mg',
+    price: '$70',
+    desc: 'PT-141 is a peptide that activates melanocortin receptors to support libido and sexual arousal independently of blood flow mechanisms.',
+    image: '/products/pt141.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'tesamorelin-10mg',
+    name: 'Tesamorelin 10mg',
+    price: '$120',
+    desc: 'Tesamorelin is a growth hormone-releasing hormone analogue that stimulates natural GH production to support fat loss, particularly in the abdominal region.',
+    image: '/products/tesamorelin.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'bac-water-10ml',
+    name: 'BAC Water 10ml',
+    price: '$15',
+    desc: 'Bacteriostatic water is sterile water containing a small amount of benzyl alcohol, used to dilute and preserve injectable compounds by helping inhibit bacterial growth.',
+    image: '/products/bacwater.jpg',
+    badge: '',
+    type: 'product',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'shred-stack',
+    name: 'Shred Stack',
+    price: '$205',
+    desc: 'Includes 1 x Retatrutide 20mg and 1 x MOTS-C.',
+    image: '/products/shred.jpg',
+    badge: 'STACK',
+    type: 'stack',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'shred-max',
+    name: 'Shred Max',
+    price: '$275',
+    desc: 'Includes 1 x Retatrutide 30mg and 2 x MOTS-C.',
+    image: '/products/shredmax.png',
+    badge: 'BEST SELLER',
+    type: 'stack',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'repair-stack',
+    name: 'Repair Stack',
+    price: '$160',
+    desc: 'Includes BPC-157 and TB-500.',
+    image: '/products/repair.jpg',
+    badge: 'STACK',
+    type: 'stack',
+    status: 'available',
+    quantity: 0,
+  },
+  {
+    slug: 'mots-c-stack',
+    name: 'MOTS-C Stack',
+    price: '$200',
+    desc: 'Includes 3 x MOTS-C vials designed for consistent metabolic support and energy regulation.',
+    image: '/products/motsstack.jpg',
+    badge: 'STACK',
+    type: 'stack',
+    status: 'available',
+    quantity: 1,
+  },
+]
 
-import shredImg from "../assets/products/shred.jpg";
-import shredmaxImg from "../assets/products/shredmax.png";
-import repairImg from "../assets/products/repair.jpg";
-import motscycleImg from "../assets/products/motscycle.jpg";
-
-export const products = [
-  {
-    id: "ret20",
-    name: "Retatrutide",
-    size: "20mg",
-    price: "$145",
-    category: "core",
-    image: ret20Img,
-    description: "Single-vial Retatrutide option presented in a clean catalogue format."
-  },
-  {
-    id: "ret30",
-    name: "Retatrutide",
-    size: "30mg",
-    price: "$175",
-    category: "core",
-    image: ret30Img,
-    description: "Higher strength Retatrutide option for premium catalogue presentation."
-  },
-  {
-    id: "mots",
-    name: "MOTS-C",
-    size: "10mg",
-    price: "$80",
-    category: "core",
-    image: motsImg,
-    description: "MOTS-C presented as a single-vial core catalogue product."
-  },
-  {
-    id: "nad",
-    name: "NAD+",
-    size: "500mg",
-    price: "$100",
-    category: "core",
-    image: nadImg,
-    description: "NAD+ 500mg option structured for clean product presentation."
-  },
-  {
-    id: "ghk",
-    name: "GHK-CU",
-    size: "50mg",
-    price: "$65",
-    category: "core",
-    image: ghkImg,
-    description: "GHK-CU peptide in a simple, single-product format."
-  },
-  {
-    id: "bpc",
-    name: "BPC-157",
-    size: "10mg",
-    price: "$80",
-    category: "core",
-    image: bpcImg,
-    description: "BPC-157 vial presented as part of the core peptide line."
-  },
-  {
-    id: "tb",
-    name: "TB-500",
-    size: "10mg",
-    price: "$100",
-    category: "core",
-    image: tbImg,
-    description: "TB-500 single vial option within the ALPHYX core range."
-  },
-  {
-    id: "pt",
-    name: "PT-141",
-    size: "10mg",
-    price: "$70",
-    category: "core",
-    image: ptImg,
-    description: "PT-141 product for low libido support."
-  },
-  {
-    id: "tesa",
-    name: "Tesamorelin",
-    size: "10mg",
-    price: "$120",
-    category: "core",
-    image: tesaImg,
-    description: "Tesamorelin vial option in the core peptide category."
-  },
-  {
-    id: "bac",
-    name: "Bac Water",
-    size: "10ml",
-    price: "$15",
-    category: "core",
-    image: bacImg,
-    description: "Bacteriostatic water supplied for mixing and preparation."
-  },
-
-  {
-    id: "shred",
-    name: "SHRED",
-    size: "Retatrutide 20mg + MOTS-C",
-    price: "$205",
-    category: "stack",
-    image: shredImg,
-    description: "A focused stack built around Retatrutide and MOTS-C in a clean bundle format."
-  },
-  {
-    id: "shredmax",
-    name: "SHRED MAX",
-    size: "Retatrutide 30mg + 2x MOTS-C",
-    price: "$275",
-    category: "stack",
-    image: shredmaxImg,
-    description: "A higher-tier stack pairing Retatrutide 30mg with 2x MOTS-C for a stronger bundle option."
-  },
-  {
-    id: "repair",
-    name: "REPAIR",
-    size: "BPC-157 + TB-500",
-    price: "$160",
-    category: "stack",
-    image: repairImg,
-    description: "A recovery-focused bundle combining BPC-157 and TB-500."
-  },
-  {
-    id: "motscycle",
-    name: "MOTS-C CYCLE",
-    size: "3x MOTS-C",
-    price: "$200",
-    category: "stack",
-    image: motscycleImg,
-    description: "A multi-vial MOTS-C bundle designed for cycle-style use."
-  }
-];
+export default products

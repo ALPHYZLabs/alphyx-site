@@ -1,33 +1,23 @@
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
-    <nav className="navbar">
+    <header className="navbar">
       <div className="navbar-inner">
-        <Link
-          to="/"
-          className="brand"
-          style={{ display: "flex", alignItems: "center", gap: "12px" }}
-        >
-       <img
-  src={logo}
-  alt="ALPHYX Labs logo"
-  style={{
-    height: "42px",
-    filter: "drop-shadow(0 0 6px rgba(57,255,20,0.4))"
-  }}
-/>
-          
+        <Link to="/" className="brand brand-wrap">
+          <img src="/logo.jpg" alt="ALPHYX Labs" className="brand-logo" />
+          <span>ALPHYX Labs</span>
         </Link>
 
-        <div className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/products" className="nav-link">Products</Link>
-	<Link to="/coas" className="nav-link">COAs</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
-        </div>
+    <nav className="nav-links">
+  <Link to="/">Home</Link>
+  <Link to="/products">Products</Link>
+  <Link to="/guides">Research Guides</Link>
+  <Link to="/calculator">Calculator</Link>
+  <Link to="/verification">COAs</Link>
+  <Link to="/contact">Contact</Link>
+</nav>
       </div>
-    </nav>
-  );
+    </header>
+  )
 }
