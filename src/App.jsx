@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import FloatingWhatsAppButton from './components/FloatingWhatsAppButton.jsx'
 import Home from './pages/Home.jsx'
 import Guides from './pages/Guides.jsx'
 import Products from './pages/Products.jsx'
@@ -40,7 +39,6 @@ export default function App() {
 	<Route path="/admin" element={<Admin />} />
       </Routes>
 
-      <FloatingWhatsAppButton />
     </>
   )
 }
