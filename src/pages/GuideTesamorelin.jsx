@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Disclaimer from '../components/Disclaimer'
 
 export default function GuideTesamorelin() {
   return (
@@ -60,3 +61,4 @@ export default function GuideTesamorelin() {
     </div>
   )
 }
+<Disclaimer variant="compact" />

@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import GuideCard from '../components/GuideCard'
+import Disclaimer from '../components/Disclaimer'
 
 export default function Guides() {
   return (
@@ -32,3 +33,4 @@ export default function Guides() {
     </div>
   )
 }
+<Disclaimer variant="compact" />

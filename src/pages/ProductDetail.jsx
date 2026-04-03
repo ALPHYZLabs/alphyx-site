@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import products from '../data/products'
 import { getMergedProducts } from '../utils/stock'
+import Disclaimer from '../components/Disclaimer'
 
 const ORDER_EMAIL = 'alphyxlabs@yahoo.com'
 const WHATSAPP_NUMBER = '61466985311'
@@ -292,6 +293,7 @@ export default function ProductDetail() {
                       </>
                     )}
                   </div>
+		<Disclaimer />
 
                   <div className="detail-cta-bottom">
                     <Link to="/products" className="detail-cta-back">

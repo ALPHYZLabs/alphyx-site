@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Disclaimer from '../components/Disclaimer'
 
 export default function GuideNadPlus() {
   return (
@@ -60,3 +61,4 @@ export default function GuideNadPlus() {
     </div>
   )
 }
+<Disclaimer variant="compact" />

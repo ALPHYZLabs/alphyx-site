@@ -1,3 +1,4 @@
+import Disclaimer from './Disclaimer'
 export default function Footer() {
   return (
     <footer className="footer">
@@ -11,16 +12,10 @@ export default function Footer() {
           />
 
           <p className="footer-small">
-            Established 2026
-          </p>
-
-          <p className="footer-small">
             Dominance, Engineered.
           </p>
 
-          <p className="footer-small">
-            For research purposes only.
-          </p>
+                <Disclaimer variant="footer" />
         </div>
 
         <div className="footer-links">
