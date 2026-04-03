@@ -148,27 +148,29 @@ export default function Contact() {
                 minWidth: '240px',
                 padding: '18px 30px',
                 borderRadius: '18px',
-                border: '1px solid rgba(255,255,255,0.16)',
-                background: 'rgba(255,255,255,0.04)',
-                color: '#fff',
+                border: '1px solid rgba(57,255,20,0.4)',
+                background: 'rgba(57,255,20,0.08)',
+                color: '#39FF14',
                 textDecoration: 'none',
                 textTransform: 'uppercase',
                 letterSpacing: '0.24em',
                 fontSize: '13px',
                 fontWeight: 700,
-                boxShadow: '0 0 20px rgba(255,255,255,0.04)',
+                boxShadow: '0 0 20px rgba(57,255,20,0.5), 0 0 40px rgba(57,255,20,0.25)',
                 transition: 'all 0.25s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.border = '1px solid #39FF14'
-                e.currentTarget.style.color = '#39FF14'
-                e.currentTarget.style.boxShadow = '0 0 30px rgba(57,255,20,0.22)'
+                e.currentTarget.style.background = '#39FF14'
+                e.currentTarget.style.color = '#000'
+                e.currentTarget.style.boxShadow =
+                  '0 0 35px rgba(57,255,20,0.9), 0 0 70px rgba(57,255,20,0.5)'
                 e.currentTarget.style.transform = 'translateY(-2px)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.border = '1px solid rgba(255,255,255,0.16)'
-                e.currentTarget.style.color = '#fff'
-                e.currentTarget.style.boxShadow = '0 0 20px rgba(255,255,255,0.04)'
+                e.currentTarget.style.background = 'rgba(57,255,20,0.08)'
+                e.currentTarget.style.color = '#39FF14'
+                e.currentTarget.style.boxShadow =
+                  '0 0 20px rgba(57,255,20,0.5), 0 0 40px rgba(57,255,20,0.25)'
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >

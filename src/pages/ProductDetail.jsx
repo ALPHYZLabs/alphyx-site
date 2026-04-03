@@ -150,7 +150,17 @@ export default function ProductDetail() {
               ) : null}
 
               <h1 className="detail-title">{product.name}</h1>
-              <div className="detail-price">{product.price}</div>
+              <div
+  className="detail-price"
+  style={{
+    color: '#39FF14',
+    fontWeight: 700,
+    letterSpacing: '0.02em',
+    textShadow: '0 0 8px rgba(57,255,20,0.6), 0 0 16px rgba(57,255,20,0.4)',
+  }}
+>
+  {product.price}
+</div>
 
               <div
                 className={`inline-block text-[10px] uppercase tracking-[0.2em] border rounded-full px-3 py-1 mb-3 ${inventory.badgeClass}`}

@@ -204,6 +204,347 @@ function TabButton({ active, children, onClick }) {
   )
 }
 
+function MobileInventoryCards({
+  products,
+  getCurrentItem,
+  handleQuantityChange,
+  handleStatusChange,
+  quickSet,
+  updateProductStock,
+}) {
+  return (
+    <div className="xl:hidden space-y-4">
+      {products.map((product) => {
+        const current = getCurrentItem(product)
+
+        return (
+          <div
+            key={product.slug}
+            style={{
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(255,255,255,0.04)',
+              backdropFilter: 'blur(16px)',
+              borderRadius: 24,
+              padding: 18,
+              boxShadow: '0 0 22px rgba(57,255,20,0.04)',
+            }}
+          >
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 6 }}>
+                {product.name}
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.62)', fontSize: 14 }}>
+                {product.price}
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gap: 12, marginBottom: 14 }}>
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.18em',
+                    color: 'rgba(255,255,255,0.46)',
+                    marginBottom: 8,
+                  }}
+                >
+                  Quantity
+                </div>
+                <input
+                  type="number"
+                  min="0"
+                  value={current.quantity}
+                  onChange={(e) => handleQuantityChange(product, e.target.value)}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(0,0,0,0.62)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    color: '#fff',
+                    borderRadius: 14,
+                    padding: '14px 16px',
+                    outline: 'none',
+                    fontSize: 15,
+                  }}
+                />
+              </div>
+
+              <div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.18em',
+                    color: 'rgba(255,255,255,0.46)',
+                    marginBottom: 8,
+                  }}
+                >
+                  Status
+                </div>
+                <select
+                  value={current.status}
+                  onChange={(e) => handleStatusChange(product, e.target.value)}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(0,0,0,0.62)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    color: '#fff',
+                    borderRadius: 14,
+                    padding: '14px 16px',
+                    outline: 'none',
+                    fontSize: 15,
+                  }}
+                >
+                  <option value="available">Available</option>
+                  <option value="sold-out">Sold Out</option>
+                  <option value="coming-soon">Coming Soon</option>
+                </select>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
+              {[0, 5, 10].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => quickSet(product, n)}
+                  style={{
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    color: '#fff',
+                    background: 'rgba(255,255,255,0.04)',
+                    borderRadius: 12,
+                    padding: '10px 12px',
+                    fontSize: 12,
+                  }}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() =>
+                  updateProductStock(product, {
+                    quantity: Math.max(0, current.quantity - 1),
+                  })
+                }
+                style={{
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#fff',
+                  background: 'rgba(255,255,255,0.04)',
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  fontSize: 12,
+                }}
+              >
+                -1
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  updateProductStock(product, {
+                    quantity: current.quantity + 1,
+                  })
+                }
+                style={{
+                  border: '1px solid rgba(57,255,20,0.28)',
+                  color: '#39FF14',
+                  background: 'rgba(57,255,20,0.10)',
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  fontSize: 12,
+                }}
+              >
+                +1
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleStatusChange(product, 'coming-soon')}
+                style={{
+                  border: '1px solid rgba(245,158,11,0.25)',
+                  color: '#f59e0b',
+                  background: 'rgba(245,158,11,0.12)',
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  fontSize: 12,
+                }}
+              >
+                Coming Soon
+              </button>
+
+              <button
+                type="button"
+                onClick={() =>
+                  updateProductStock(product, {
+                    quantity: typeof product.quantity === 'number' ? product.quantity : 0,
+                    status: product.status || 'sold-out',
+                  })
+                }
+                style={{
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#fff',
+                  background: 'rgba(255,255,255,0.04)',
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  fontSize: 12,
+                }}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function MobileDeliveryCards({ deliveries, markDeliveryDelivered, deleteDelivery }) {
+  return (
+    <div className="xl:hidden space-y-4">
+      {deliveries.length === 0 ? (
+        <div
+          style={{
+            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.04)',
+            borderRadius: 24,
+            padding: 20,
+            color: 'rgba(255,255,255,0.5)',
+            textAlign: 'center',
+          }}
+        >
+          No deliveries added yet.
+        </div>
+      ) : (
+        deliveries.map((delivery) => (
+          <div
+            key={delivery.id}
+            style={{
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(255,255,255,0.04)',
+              backdropFilter: 'blur(16px)',
+              borderRadius: 24,
+              padding: 18,
+            }}
+          >
+            <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 10 }}>
+              {delivery.productName}
+            </div>
+
+            <div style={{ display: 'grid', gap: 8, color: 'rgba(255,255,255,0.72)', fontSize: 14, marginBottom: 14 }}>
+              <div>Supplier: {delivery.supplier || '—'}</div>
+              <div>Quantity: {delivery.quantity}</div>
+              <div>Cost: ${delivery.cost || 0}</div>
+              <div>ETA: {delivery.eta || '—'}</div>
+              <div>Status: {delivery.status === 'in-transit' ? 'In Transit' : delivery.status}</div>
+            </div>
+
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {delivery.status !== 'delivered' && (
+                <button
+                  type="button"
+                  onClick={() => markDeliveryDelivered(delivery)}
+                  style={{
+                    border: '1px solid rgba(57,255,20,0.28)',
+                    color: '#39FF14',
+                    background: 'rgba(57,255,20,0.10)',
+                    borderRadius: 12,
+                    padding: '10px 12px',
+                    fontSize: 12,
+                  }}
+                >
+                  Mark Delivered
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() => deleteDelivery(delivery.id)}
+                style={{
+                  border: '1px solid rgba(248,113,113,0.22)',
+                  color: '#f87171',
+                  background: 'rgba(248,113,113,0.12)',
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  fontSize: 12,
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  )
+}
+
+function MobileBudgetCards({ budgetEntries, money, deleteBudgetEntry }) {
+  return (
+    <div className="xl:hidden space-y-4">
+      {budgetEntries.length === 0 ? (
+        <div
+          style={{
+            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.04)',
+            borderRadius: 24,
+            padding: 20,
+            color: 'rgba(255,255,255,0.5)',
+            textAlign: 'center',
+          }}
+        >
+          No budget entries added yet.
+        </div>
+      ) : (
+        budgetEntries.map((entry) => (
+          <div
+            key={entry.id}
+            style={{
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(255,255,255,0.04)',
+              backdropFilter: 'blur(16px)',
+              borderRadius: 24,
+              padding: 18,
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
+              <div style={{ fontSize: 16, fontWeight: 700 }}>{entry.category}</div>
+              <div style={{ color: entry.type === 'income' ? '#39FF14' : '#f87171', fontWeight: 700 }}>
+                {money(entry.amount)}
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gap: 8, color: 'rgba(255,255,255,0.72)', fontSize: 14, marginBottom: 14 }}>
+              <div>Date: {entry.date}</div>
+              <div>Type: {entry.type}</div>
+              <div>Note: {entry.note || '—'}</div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => deleteBudgetEntry(entry.id)}
+              style={{
+                border: '1px solid rgba(248,113,113,0.22)',
+                color: '#f87171',
+                background: 'rgba(248,113,113,0.12)',
+                borderRadius: 12,
+                padding: '10px 12px',
+                fontSize: 12,
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        ))
+      )}
+    </div>
+  )
+}
+
 export default function Admin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [password, setPassword] = useState('')

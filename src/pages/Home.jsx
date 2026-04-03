@@ -41,7 +41,6 @@ export default function Home() {
             <div className="section-kicker">Featured Products</div>
             <h2 className="section-title">Core catalogue</h2>
             <p className="section-text">
-              Clean presentation for flagship compounds and stacks.
             </p>
 
             <div className="grid">
@@ -52,7 +51,17 @@ export default function Home() {
     </div>
     <div className="card-topline">
       <h3 className="card-title">Retatrutide 30mg</h3>
-      <div className="product-price">$175</div>
+      <div
+  className="product-price"
+  style={{
+    color: '#39FF14',
+    fontWeight: 700,
+    letterSpacing: '0.02em',
+    textShadow: '0 0 8px rgba(57,255,20,0.6), 0 0 16px rgba(57,255,20,0.4)',
+  }}
+>
+  $175
+</div>
     </div>
     <p className="card-text">
       Retatrutide is a triple hormone receptor agonist targeting GLP-1, GIP, and glucagon receptors, designed to support fat loss, metabolic rate, and blood sugar control.
@@ -65,7 +74,17 @@ export default function Home() {
     </div>
     <div className="card-topline">
       <h3 className="card-title">MOTS-C</h3>
-      <div className="product-price">$80</div>
+      <div
+  className="product-price"
+  style={{
+    color: '#39FF14',
+    fontWeight: 700,
+    letterSpacing: '0.02em',
+    textShadow: '0 0 8px rgba(57,255,20,0.6), 0 0 16px rgba(57,255,20,0.4)',
+  }}
+>
+  $80
+</div>
     </div>
     <p className="card-text">
       MOTS-C is a mitochondria-derived peptide that supports energy metabolism, improves insulin sensitivity, and promotes fat utilisation.
@@ -79,7 +98,17 @@ export default function Home() {
     </div>
     <div className="card-topline">
       <h3 className="card-title">Shred Max</h3>
-      <div className="product-price">$275</div>
+      <div
+  className="product-price"
+  style={{
+    color: '#39FF14',
+    fontWeight: 700,
+    letterSpacing: '0.02em',
+    textShadow: '0 0 8px rgba(57,255,20,0.6), 0 0 16px rgba(57,255,20,0.4)',
+  }}
+>
+  $275
+</div>
     </div>
     <p className="card-text">
       Includes 1 x Retatrutide 30mg and 2 x MOTS-C.
@@ -92,7 +121,17 @@ export default function Home() {
     </div>
     <div className="card-topline">
       <h3 className="card-title">Tesamorelin 10mg</h3>
-      <div className="product-price">$120</div>
+      <div
+  className="product-price"
+  style={{
+    color: '#39FF14',
+    fontWeight: 700,
+    letterSpacing: '0.02em',
+    textShadow: '0 0 8px rgba(57,255,20,0.6), 0 0 16px rgba(57,255,20,0.4)',
+  }}
+>
+  $120
+</div>
     </div>
     <p className="card-text">
       Tesamorelin is a growth hormone-releasing hormone analogue that stimulates natural GH production to support fat loss, particularly in the abdominal region.
@@ -113,34 +152,32 @@ export default function Home() {
         <section className="section">
           <div className="container">
             <div className="section-kicker">Research Guides</div>
-            <h2 className="section-title">Structured information pages</h2>
+            <h2 className="section-title">Structured Information</h2>
             <p className="section-text">
-              Keep the homepage clean and let users open detailed information pages
-              for each compound.
             </p>
 
             <div className="grid">
               <div className="card">
                 <h3 className="card-title">Retatrutide</h3>
-                <p className="card-text">Detailed structured research guide.</p>
+                <p className="card-text"></p>
                 <Link to="/guides/retatrutide" className="card-link">Open Guide</Link>
               </div>
 
               <div className="card">
                 <h3 className="card-title">MOTS-C</h3>
-                <p className="card-text">Clean guide layout with consistent structure.</p>
+                <p className="card-text"></p>
                 <Link to="/guides/mots-c" className="card-link">Open Guide</Link>
               </div>
 
               <div className="card">
                 <h3 className="card-title">NAD+</h3>
-                <p className="card-text">Premium formatted guide page.</p>
+                <p className="card-text"></p>
                 <Link to="/guides/nad-plus" className="card-link">Open Guide</Link>
               </div>
 
               <div className="card">
                 <h3 className="card-title">GHK-Cu</h3>
-                <p className="card-text">Consistent ALPHYX guide structure.</p>
+                <p className="card-text"></p>
                 <Link to="/guides/ghk-cu" className="card-link">Open Guide</Link>
               </div>
             </div>

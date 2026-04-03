@@ -11,27 +11,32 @@ function getInventoryLabel(product) {
   if (product.status === 'coming-soon') {
     return {
       text: 'Coming Soon',
-      className: 'border-yellow-400/40 text-yellow-300',
+      style: {
+        color: '#facc15',
+        border: '1px solid rgba(250,204,21,0.35)',
+        background: 'rgba(250,204,21,0.10)',
+      },
     }
   }
 
   if (product.quantity <= 0 || product.status === 'sold-out') {
     return {
       text: 'Sold Out',
-      className: 'border-red-400/40 text-red-300',
-    }
-  }
-
-  if (product.quantity <= 3) {
-    return {
-      text: `Low Stock · ${product.quantity} Left`,
-      className: 'border-orange-400/40 text-orange-300',
+      style: {
+        color: '#f87171',
+        border: '1px solid rgba(248,113,113,0.35)',
+        background: 'rgba(248,113,113,0.10)',
+      },
     }
   }
 
   return {
     text: `In Stock · ${product.quantity} Available`,
-    className: 'border-[#39FF14]/40 text-[#39FF14]',
+    style: {
+      color: '#39FF14',
+      border: '1px solid rgba(57,255,20,0.35)',
+      background: 'rgba(57,255,20,0.10)',
+    },
   }
 }
 
@@ -71,44 +76,41 @@ function ProductGrid({ items }) {
                 alt={product.name}
                 className="product-image"
               />
-
-              {product.status === 'sold-out' ? (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[2px]">
-                  <span className="rounded-full border border-red-400/40 bg-black/70 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-red-300">
-                    Sold Out
-                  </span>
-                </div>
-              ) : null}
-
-              {product.status === 'coming-soon' ? (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/45 backdrop-blur-[2px]">
-                  <span className="rounded-full border border-yellow-400/40 bg-black/70 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-yellow-300">
-                    Coming Soon
-                  </span>
-                </div>
-              ) : null}
             </div>
 
             <div className="card-topline">
               <h3 className="card-title">{product.name}</h3>
-              <div className="product-price">{product.price}</div>
+              <div
+  className="product-price"
+  style={{
+    color: '#39FF14',
+    fontWeight: 600,
+    letterSpacing: '0.02em',
+    textShadow: '0 0 8px rgba(57,255,20,0.6), 0 0 16px rgba(57,255,20,0.4)',
+  }}
+>
+  {product.price}
+</div>
             </div>
 
             <p className="card-text">{product.desc}</p>
 
             <div
-              className={`inline-block text-[10px] uppercase tracking-[0.2em] border rounded-full px-3 py-1 mb-2 ${inventory.className}`}
+              style={{
+                display: 'inline-block',
+                fontSize: 11,
+                textTransform: 'uppercase',
+                letterSpacing: '0.18em',
+                borderRadius: 999,
+                padding: '8px 12px',
+                marginBottom: '16px',
+                ...inventory.style,
+              }}
             >
               {inventory.text}
             </div>
 
-            <span className="card-link">
-              {product.status === 'sold-out'
-                ? 'Sold Out'
-                : product.status === 'coming-soon'
-                ? 'Coming Soon'
-                : 'View Product'}
-            </span>
+            <span className="card-link">View Product</span>
           </Link>
         )
       })}
