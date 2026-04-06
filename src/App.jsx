@@ -15,6 +15,7 @@ import GuidePt141 from './pages/GuidePt141.jsx'
 import GuideGhkCu from './pages/GuideGhkCu.jsx'
 import Calculator from './pages/Calculator.jsx'
 import Admin from "./pages/Admin"
+import BeginnerGuide from './pages/BeginnerGuide.jsx'
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/guides/ghk-cu" element={<GuideGhkCu />} />
 	<Route path="/calculator" element={<Calculator />} />
 	<Route path="/admin" element={<Admin />} />
+	<Route path="/guides/beginner-guide" element={<BeginnerGuide />} />
       </Routes>
 
     </>
