@@ -17,14 +17,12 @@ export default function Verification() {
           <div className="section-kicker">Verification</div>
           <h1 className="section-title">COAs and batch documentation</h1>
           <p className="section-text">
-            Present supporting documentation in a clear, premium layout.
           </p>
 
           <div className="grid">
             {coas.map((coa) => (
               <div className="card" key={coa.name}>
                 <h3 className="card-title">{coa.name}</h3>
-                <p className="card-text">Preview or replace this item with your final documentation image.</p>
                 <a href={coa.file} target="_blank" rel="noreferrer" className="card-link">
                   Open COA
                 </a>
