@@ -7,6 +7,7 @@ import { getSavedStock, saveStock, getMergedProducts } from '../utils/stock'
 const ADMIN_PASSWORD = 'Summer090215'
 const DELIVERIES_KEY = 'alphyx_deliveries'
 const BUDGET_KEY = 'alphyx_budget'
+const ORDERS_KEY = 'alphyx_orders'
 
 function loadLocalArray(key) {
   if (typeof window === 'undefined') return []
@@ -483,6 +484,130 @@ function MobileDeliveryCards({ deliveries, markDeliveryDelivered, deleteDelivery
   )
 }
 
+
+function MobileOrderCards({ orders, deleteOrder, togglePaymentStatus, getPaymentPill }) {
+  return (
+    <div className="xl:hidden space-y-4">
+      {orders.length === 0 ? (
+        <div
+          style={{
+            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'rgba(255,255,255,0.04)',
+            borderRadius: 24,
+            padding: 20,
+            color: 'rgba(255,255,255,0.5)',
+            textAlign: 'center',
+          }}
+        >
+          No orders added yet.
+        </div>
+      ) : (
+        orders.map((order) => (
+          <div
+            key={order.id}
+            style={{
+              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(255,255,255,0.04)',
+              backdropFilter: 'blur(16px)',
+              borderRadius: 24,
+              padding: 18,
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 10 }}>
+              <div>
+                <div style={{ fontSize: 16, fontWeight: 700 }}>{order.customer || 'Walk-in Order'}</div>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>{order.date}</div>
+                <div style={{ marginTop: 8 }}>
+                  <span style={getPaymentPill(order.paymentStatus || 'unpaid')}>
+                    {(order.paymentStatus || 'unpaid') === 'paid' ? 'Paid' : 'Unpaid'}
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ color: '#39FF14', fontWeight: 700 }}>
+                {order.totalItems} item{order.totalItems === 1 ? '' : 's'}
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gap: 8, color: 'rgba(255,255,255,0.72)', fontSize: 14, marginBottom: 14 }}>
+              <div>Channel: {order.channel || '—'}</div>
+              <div>Items: {order.items?.length || 0}</div>
+              <div>Note: {order.note || '—'}</div>
+            </div>
+
+            <div
+              style={{
+                display: 'grid',
+                gap: 8,
+                marginBottom: 14,
+              }}
+            >
+              {(order.items || []).map((item, index) => (
+                <div
+                  key={`${order.id}_${item.productSlug}_${index}`}
+                  style={{
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(0,0,0,0.32)',
+                    borderRadius: 14,
+                    padding: '10px 12px',
+                    color: 'rgba(255,255,255,0.8)',
+                    fontSize: 14,
+                  }}
+                >
+                  {item.productName} × {item.quantity}
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => togglePaymentStatus(order.id)}
+                style={
+                  (order.paymentStatus || 'unpaid') === 'paid'
+                    ? {
+                        border: '1px solid rgba(245,158,11,0.25)',
+                        color: '#f59e0b',
+                        background: 'rgba(245,158,11,0.12)',
+                        borderRadius: 12,
+                        padding: '10px 12px',
+                        fontSize: 12,
+                      }
+                    : {
+                        border: '1px solid rgba(57,255,20,0.28)',
+                        color: '#39FF14',
+                        background: 'rgba(57,255,20,0.10)',
+                        borderRadius: 12,
+                        padding: '10px 12px',
+                        fontSize: 12,
+                      }
+                }
+              >
+                {(order.paymentStatus || 'unpaid') === 'paid' ? 'Mark Unpaid' : 'Mark Paid'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => deleteOrder(order.id)}
+                style={{
+                  border: '1px solid rgba(248,113,113,0.22)',
+                  color: '#f87171',
+                  background: 'rgba(248,113,113,0.12)',
+                  borderRadius: 12,
+                  padding: '10px 12px',
+                  fontSize: 12,
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  )
+}
+
 function MobileBudgetCards({ budgetEntries, money, deleteBudgetEntry }) {
   return (
     <div className="xl:hidden space-y-4">
@@ -553,6 +678,7 @@ export default function Admin() {
   const [stock, setStock] = useState({})
   const [deliveries, setDeliveries] = useState([])
   const [budgetEntries, setBudgetEntries] = useState([])
+  const [orders, setOrders] = useState([])
 
   const [search, setSearch] = useState('')
   const [showLowStockOnly, setShowLowStockOnly] = useState(false)
@@ -575,10 +701,24 @@ export default function Admin() {
     note: '',
   })
 
+  const [orderForm, setOrderForm] = useState({
+    date: todayString(),
+    customer: '',
+    channel: 'email',
+    note: '',
+    items: [
+      {
+        productSlug: products[0]?.slug || '',
+        quantity: '',
+      },
+    ],
+  })
+
   useEffect(() => {
     setStock(getSavedStock())
     setDeliveries(loadLocalArray(DELIVERIES_KEY))
     setBudgetEntries(loadLocalArray(BUDGET_KEY))
+    setOrders(loadLocalArray(ORDERS_KEY))
   }, [])
 
   const mergedProducts = useMemo(() => {
@@ -767,6 +907,22 @@ export default function Admin() {
     })
   }
 
+  const getPaymentPill = (status) => {
+    if (status === 'paid') {
+      return pillStyle({
+        color: COLORS.green,
+        background: COLORS.greenSoft,
+        border: COLORS.greenBorder,
+      })
+    }
+
+    return pillStyle({
+      color: COLORS.red,
+      background: COLORS.redSoft,
+      border: COLORS.redBorder,
+    })
+  }
+
   const handleDeliveryFormChange = (field, value) => {
     setDeliveryForm((prev) => ({ ...prev, [field]: value }))
   }
@@ -871,6 +1027,159 @@ export default function Admin() {
     setBudgetEntries(updated)
     saveLocalArray(BUDGET_KEY, updated)
   }
+
+
+  const handleOrderFormChange = (field, value) => {
+    setOrderForm((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleOrderItemChange = (index, field, value) => {
+    setOrderForm((prev) => ({
+      ...prev,
+      items: prev.items.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, [field]: value } : item
+      ),
+    }))
+  }
+
+  const addOrderItem = () => {
+    setOrderForm((prev) => ({
+      ...prev,
+      items: [
+        ...prev.items,
+        {
+          productSlug: products[0]?.slug || '',
+          quantity: '',
+        },
+      ],
+    }))
+  }
+
+  const removeOrderItem = (index) => {
+    setOrderForm((prev) => {
+      if (prev.items.length === 1) return prev
+
+      return {
+        ...prev,
+        items: prev.items.filter((_, itemIndex) => itemIndex !== index),
+      }
+    })
+  }
+
+  const addOrder = (e) => {
+    e.preventDefault()
+
+    const cleanItems = orderForm.items
+      .map((item) => ({
+        productSlug: item.productSlug,
+        quantity: Math.max(0, Number(item.quantity) || 0),
+      }))
+      .filter((item) => item.productSlug && item.quantity > 0)
+
+    if (cleanItems.length === 0) {
+      alert('Add at least one peptide and quantity.')
+      return
+    }
+
+    const nextStock = { ...stock }
+    const normalizedItems = []
+
+    for (const item of cleanItems) {
+      const product = products.find((p) => p.slug === item.productSlug)
+
+      if (!product) {
+        alert('Product not found.')
+        return
+      }
+
+      const baseCurrent = getCurrentItem(product)
+      const workingCurrent = nextStock[product.slug]
+        ? {
+            quantity:
+              typeof nextStock[product.slug].quantity === 'number'
+                ? nextStock[product.slug].quantity
+                : baseCurrent.quantity,
+            status: nextStock[product.slug].status || baseCurrent.status,
+          }
+        : baseCurrent
+
+      if (workingCurrent.status === 'coming-soon') {
+        alert(`${product.name} is marked as coming soon.`)
+        return
+      }
+
+      if (workingCurrent.quantity < item.quantity) {
+        alert(`Not enough stock for ${product.name}.`)
+        return
+      }
+
+      const nextQuantity = workingCurrent.quantity - item.quantity
+
+      nextStock[product.slug] = {
+        quantity: nextQuantity,
+        status: nextQuantity > 0 ? 'available' : 'sold-out',
+      }
+
+      normalizedItems.push({
+        productSlug: product.slug,
+        productName: product.name,
+        quantity: item.quantity,
+      })
+    }
+
+    setStock(nextStock)
+    saveStock(nextStock)
+
+    const next = {
+      id: uid('order'),
+      date: orderForm.date || todayString(),
+      customer: orderForm.customer.trim(),
+      channel: orderForm.channel,
+      note: orderForm.note.trim(),
+      items: normalizedItems,
+      totalItems: normalizedItems.reduce((sum, item) => sum + item.quantity, 0),
+      paymentStatus: 'unpaid',
+      createdAt: new Date().toISOString(),
+    }
+
+    const updated = [next, ...orders]
+    setOrders(updated)
+    saveLocalArray(ORDERS_KEY, updated)
+
+    setOrderForm({
+      date: todayString(),
+      customer: '',
+      channel: 'email',
+      note: '',
+      items: [
+        {
+          productSlug: products[0]?.slug || '',
+          quantity: '',
+        },
+      ],
+    })
+  }
+
+  const deleteOrder = (id) => {
+    const updated = orders.filter((item) => item.id !== id)
+    setOrders(updated)
+    saveLocalArray(ORDERS_KEY, updated)
+  }
+
+  const togglePaymentStatus = (id) => {
+    const updated = orders.map((order) =>
+      order.id === id
+        ? {
+            ...order,
+            paymentStatus: (order.paymentStatus || 'unpaid') === 'paid' ? 'unpaid' : 'paid',
+          }
+        : order
+    )
+
+    setOrders(updated)
+    saveLocalArray(ORDERS_KEY, updated)
+  }
+
 
   if (!isLoggedIn) {
     return (
@@ -1150,6 +1459,9 @@ export default function Admin() {
             </TabButton>
             <TabButton active={activeTab === 'deliveries'} onClick={() => setActiveTab('deliveries')}>
               Deliveries
+            </TabButton>
+            <TabButton active={activeTab === 'orders'} onClick={() => setActiveTab('orders')}>
+              Orders
             </TabButton>
             <TabButton active={activeTab === 'budget'} onClick={() => setActiveTab('budget')}>
               Budget
@@ -1499,7 +1811,7 @@ export default function Admin() {
                     <tbody>
                       {deliveries.length === 0 ? (
                         <tr>
-                          <td colSpan="7" style={{ padding: '56px 24px', textAlign: 'center', color: COLORS.whiteDim }}>
+                          <td colSpan="8" style={{ padding: '56px 24px', textAlign: 'center', color: COLORS.whiteDim }}>
                             No deliveries added yet.
                           </td>
                         </tr>
@@ -1556,6 +1868,266 @@ export default function Admin() {
                       )}
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+
+          {activeTab === 'orders' && (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '430px minmax(0,1fr)',
+                gap: 28,
+                alignItems: 'start',
+              }}
+            >
+              <div
+                style={cardStyle({
+                  border: COLORS.greenBorder,
+                  shadow: '0 0 28px rgba(57,255,20,0.05)',
+                })}
+              >
+                <div style={{ padding: 30 }}>
+                  <SectionTag color={COLORS.green}>Add Order</SectionTag>
+                  <h2 style={{ fontSize: 40, lineHeight: 1, margin: '0 0 24px 0' }}>Order Log</h2>
+
+                  <form onSubmit={addOrder} style={{ display: 'grid', gap: 16 }}>
+                    <input
+                      type="date"
+                      value={orderForm.date}
+                      onChange={(e) => handleOrderFormChange('date', e.target.value)}
+                      style={baseInputStyle(COLORS.greenBorder)}
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Customer name"
+                      value={orderForm.customer}
+                      onChange={(e) => handleOrderFormChange('customer', e.target.value)}
+                      style={baseInputStyle(COLORS.greenBorder)}
+                    />
+
+                    <div style={{ display: 'grid', gap: 12 }}>
+                      {orderForm.items.map((item, index) => {
+                        const currentProduct = mergedProducts.find((product) => product.slug === item.productSlug) || mergedProducts[0]
+                        const currentStock = currentProduct ? getCurrentItem(currentProduct) : { quantity: 0 }
+
+                        return (
+                          <div
+                            key={`order_item_${index}`}
+                            style={{
+                              border: `1px solid ${COLORS.greenBorder}`,
+                              background: 'rgba(255,255,255,0.03)',
+                              borderRadius: 20,
+                              padding: 14,
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'minmax(0,1fr) 110px',
+                                gap: 12,
+                                marginBottom: 10,
+                              }}
+                            >
+                              <select
+                                value={item.productSlug}
+                                onChange={(e) => handleOrderItemChange(index, 'productSlug', e.target.value)}
+                                style={baseInputStyle(COLORS.greenBorder)}
+                              >
+                                {mergedProducts.map((product) => {
+                                  const current = getCurrentItem(product)
+
+                                  return (
+                                    <option key={product.slug} value={product.slug}>
+                                      {product.name} · {current.quantity} in stock
+                                    </option>
+                                  )
+                                })}
+                              </select>
+
+                              <input
+                                type="number"
+                                min="1"
+                                placeholder="Qty"
+                                value={item.quantity}
+                                onChange={(e) => handleOrderItemChange(index, 'quantity', e.target.value)}
+                                style={baseInputStyle(COLORS.greenBorder)}
+                              />
+                            </div>
+
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                gap: 12,
+                                flexWrap: 'wrap',
+                              }}
+                            >
+                              <div style={{ color: COLORS.whiteDim, fontSize: 13 }}>
+                                {currentProduct ? `${currentProduct.name} · ${currentStock.quantity} in stock` : 'Select a product'}
+                              </div>
+
+                              {orderForm.items.length > 1 && (
+                                <button
+                                  type="button"
+                                  onClick={() => removeOrderItem(index)}
+                                  style={actionButtonStyle({ border: COLORS.redBorder, color: COLORS.red, background: COLORS.redSoft })}
+                                >
+                                  Remove
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={addOrderItem}
+                      style={actionButtonStyle({ border: COLORS.greenBorder, color: COLORS.green, background: COLORS.greenSoft })}
+                    >
+                      Add Peptide
+                    </button>
+
+                    <select
+                      value={orderForm.channel}
+                      onChange={(e) => handleOrderFormChange('channel', e.target.value)}
+                      style={baseInputStyle(COLORS.greenBorder)}
+                    >
+                      <option value="email">Email</option>
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="instagram">Instagram</option>
+                      <option value="manual">Manual</option>
+                    </select>
+
+                    <textarea
+                      rows="5"
+                      placeholder="Order notes"
+                      value={orderForm.note}
+                      onChange={(e) => handleOrderFormChange('note', e.target.value)}
+                      style={{ ...baseInputStyle(COLORS.greenBorder), resize: 'none' }}
+                    />
+
+                    <button
+                      type="submit"
+                      style={primaryButtonStyle({
+                        color: COLORS.green,
+                        background: COLORS.greenSoft,
+                        border: COLORS.green,
+                      })}
+                    >
+                      Save Order
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <div style={cardStyle({ shadow: '0 0 28px rgba(57,255,20,0.04)' })}>
+                <div className="hidden xl:block" style={{ overflow: 'auto', maxHeight: '75vh', borderRadius: 28 }}>
+                  <table style={{ width: '100%', minWidth: 1040, borderCollapse: 'collapse' }}>
+                    <thead
+                      style={{
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 20,
+                        background: 'rgba(2,2,2,0.96)',
+                        backdropFilter: 'blur(18px)',
+                        borderBottom: `1px solid ${COLORS.whiteSoft}`,
+                      }}
+                    >
+                      <tr>
+                        {['Date', 'Customer', 'Items', 'Total Qty', 'Payment', 'Channel', 'Note', 'Action'].map((label) => (
+                          <th
+                            key={label}
+                            style={{
+                              textAlign: 'left',
+                              padding: '18px 24px',
+                              fontSize: 11,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.22em',
+                              color: COLORS.whiteDim,
+                              whiteSpace: 'nowrap',
+                              fontWeight: 500,
+                            }}
+                          >
+                            {label}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {orders.length === 0 ? (
+                        <tr>
+                          <td colSpan="8" style={{ padding: '56px 24px', textAlign: 'center', color: COLORS.whiteDim }}>
+                            No orders added yet.
+                          </td>
+                        </tr>
+                      ) : (
+                        orders.map((order, index) => (
+                          <tr
+                            key={order.id}
+                            style={{
+                              borderBottom: index !== orders.length - 1 ? `1px solid ${COLORS.whiteSoft}` : 'none',
+                              background: index % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent',
+                            }}
+                          >
+                            <td style={{ padding: '20px 24px', color: COLORS.whiteText, verticalAlign: 'top' }}>{order.date}</td>
+                            <td style={{ padding: '20px 24px', color: COLORS.whiteText, verticalAlign: 'top' }}>{order.customer || '—'}</td>
+                            <td style={{ padding: '20px 24px', verticalAlign: 'top' }}>
+                              <div style={{ display: 'grid', gap: 8 }}>
+                                {(order.items || []).map((item, itemIndex) => (
+                                  <div
+                                    key={`${order.id}_${item.productSlug}_${itemIndex}`}
+                                    style={{
+                                      border: '1px solid rgba(255,255,255,0.08)',
+                                      background: 'rgba(0,0,0,0.28)',
+                                      borderRadius: 14,
+                                      padding: '10px 12px',
+                                      color: COLORS.whiteText,
+                                      fontSize: 14,
+                                    }}
+                                  >
+                                    {item.productName} × {item.quantity}
+                                  </div>
+                                ))}
+                              </div>
+                            </td>
+                            <td style={{ padding: '20px 24px', color: COLORS.whiteText, verticalAlign: 'top' }}>{order.totalItems}</td>
+                            <td style={{ padding: '20px 24px', verticalAlign: 'top' }}>
+                              <span style={pillStyle({ color: COLORS.green, background: COLORS.greenSoft, border: COLORS.greenBorder })}>
+                                {order.channel}
+                              </span>
+                            </td>
+                            <td style={{ padding: '20px 24px', color: COLORS.whiteDim, verticalAlign: 'top' }}>{order.note || '—'}</td>
+                            <td style={{ padding: '20px 24px', verticalAlign: 'top' }}>
+                              <button
+                                type="button"
+                                onClick={() => deleteOrder(order.id)}
+                                style={actionButtonStyle({ border: COLORS.redBorder, color: COLORS.red, background: COLORS.redSoft })}
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ padding: 18 }} className="xl:hidden">
+                  <MobileOrderCards
+                    orders={orders}
+                    deleteOrder={deleteOrder}
+                    togglePaymentStatus={togglePaymentStatus}
+                    getPaymentPill={getPaymentPill}
+                  />
                 </div>
               </div>
             </div>
