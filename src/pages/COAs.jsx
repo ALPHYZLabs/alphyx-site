@@ -15,6 +15,11 @@ const coas = [
     id: "ghk",
     name: "GHK-CU 50mg",
     file: "/coas/ghk.jpg"
+  },
+    {
+    id: "bpc",
+    name: "BPC-157 10mg",
+    file: "/coas/bpc.jpg"
   }
 ];
 

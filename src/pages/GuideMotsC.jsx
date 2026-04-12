@@ -9,7 +9,7 @@ export default function GuideMotsC() {
 
       <section className="guide-wrap">
         <div className="section-kicker">Research Guide</div>
-        <h1 className="section-title">Retatrutide</h1>
+        <h1 className="section-title">MOTS-C</h1>
         <p className="section-text">
           Structured reference page presented in a clean, premium format.
         </p>
@@ -42,7 +42,7 @@ export default function GuideMotsC() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>4 weeks on / 2 weeks off</p>
+            <p>6-8 weeks on / 2 weeks off</p>
           </div>
 
 	    <div className="guide-block">

@@ -9,7 +9,7 @@ export default function GuideTesamorelin() {
 
       <section className="guide-wrap">
         <div className="section-kicker">Research Guide</div>
-        <h1 className="section-title">Retatrutide</h1>
+        <h1 className="section-title">Tesamorelin</h1>
         <p className="section-text">
           Structured reference page presented in a clean, premium format.
         </p>
@@ -42,7 +42,7 @@ export default function GuideTesamorelin() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>NA</p>
+            <p>12-24+ Weeks</p>
           </div>
 
 	    <div className="guide-block">

@@ -42,7 +42,7 @@ export default function GuideRetatrutide() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>NA</p>
+            <p>12-24+ Weeks</p>
           </div>
 
 	    <div className="guide-block">

@@ -9,7 +9,7 @@ export default function GuidePt141() {
 
       <section className="guide-wrap">
         <div className="section-kicker">Research Guide</div>
-        <h1 className="section-title">Retatrutide</h1>
+        <h1 className="section-title">PT-141</h1>
         <p className="section-text">
           Structured reference page presented in a clean, premium format.
         </p>
@@ -42,7 +42,7 @@ export default function GuidePt141() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>NA</p>
+            <p>As Needed (Max 7 doses per month)</p>
           </div>
 
 	    <div className="guide-block">

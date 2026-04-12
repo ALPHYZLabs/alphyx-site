@@ -9,7 +9,7 @@ export default function GuideTb500() {
 
       <section className="guide-wrap">
         <div className="section-kicker">Research Guide</div>
-        <h1 className="section-title">Retatrutide</h1>
+        <h1 className="section-title">TB-500</h1>
         <p className="section-text">
           Structured reference page presented in a clean, premium format.
         </p>
@@ -42,7 +42,7 @@ export default function GuideTb500() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>NA</p>
+            <p>4-8 Weeks</p>
           </div>
 
 	    <div className="guide-block">

@@ -9,7 +9,7 @@ export default function GuideGhkCu() {
 
       <section className="guide-wrap">
         <div className="section-kicker">Research Guide</div>
-        <h1 className="section-title">Retatrutide</h1>
+        <h1 className="section-title">GHK-CU</h1>
         <p className="section-text">
           Structured reference page presented in a clean, premium format.
         </p>
@@ -22,7 +22,7 @@ export default function GuideGhkCu() {
 
           <div className="guide-block">
             <h2>Reconstitute with</h2>
-            <p>50mg: 2.5mL | 100mg: 5mL .</p>
+            <p>50mg: 3.5mL | 100mg: 5mL .</p>
           </div>
 
           <div className="guide-block">
@@ -42,7 +42,7 @@ export default function GuideGhkCu() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>NA</p>
+            <p>8-16 Weeks</p>
           </div>
 
 	    <div className="guide-block">

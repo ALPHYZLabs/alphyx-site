@@ -9,7 +9,7 @@ export default function GuideBpc157() {
 
       <section className="guide-wrap">
         <div className="section-kicker">Research Guide</div>
-        <h1 className="section-title">Retatrutide</h1>
+        <h1 className="section-title">BPC-157</h1>
         <p className="section-text">
           Structured reference page presented in a clean, premium format.
         </p>
@@ -42,7 +42,7 @@ export default function GuideBpc157() {
 
 	  <div className="guide-block">
             <h2>Cycle</h2>
-            <p>4-6 week cycles</p>
+            <p>4-8 week cycles</p>
           </div>
 
 	    <div className="guide-block">
